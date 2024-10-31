@@ -20,10 +20,14 @@ from genres.views import GenreCreateList, GenreRetrieveUpdateDestroy
 
 from actors.views import ActorCreateList, ActorRetrieveUpdateDestroy
 
+from movies.views import MovieListCreateApiView, MovieRetrieveUpdateDestroyApiView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('genres/', GenreCreateList.as_view(), name='genre-create-list'),
     path('genres/<int:pk>', GenreRetrieveUpdateDestroy.as_view(), name='genre-retrieve-update-destroy'),
     path('actors/', ActorCreateList.as_view(), name='actor-create-list'),
     path('actors/<int:pk>', ActorRetrieveUpdateDestroy.as_view(), name='actor-retrieve-update-destroy'),
+    path('movies/', MovieListCreateApiView.as_view(), name='movie-list-create'),
+    path('movies/<int:pk>', MovieRetrieveUpdateDestroyApiView.as_view(), name='movie-retrieve-update-destroy'),
 ]
