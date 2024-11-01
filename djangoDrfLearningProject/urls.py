@@ -16,23 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from genres.views import GenreCreateList, GenreRetrieveUpdateDestroy
-
-from actors.views import ActorCreateList, ActorRetrieveUpdateDestroy
-
-from movies.views import MovieListCreateView, MovieRetrieveUpdateDestroyApiView
-
-from reviews.views import ReviewListCreateView, ReviewRetrieveUpdateDestroyView
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('genres/', GenreCreateList.as_view(), name='genre-create-list'),
-    path('genres/<int:pk>', GenreRetrieveUpdateDestroy.as_view(), name='genre-retrieve-update-destroy'),
-    path('actors/', ActorCreateList.as_view(), name='actor-create-list'),
-    path('actors/<int:pk>', ActorRetrieveUpdateDestroy.as_view(), name='actor-retrieve-update-destroy'),
-    path('movies/', MovieListCreateView.as_view(), name='movie-list-create'),
-    path('movies/<int:pk>', MovieRetrieveUpdateDestroyApiView.as_view(), name='movie-retrieve-update-destroy'),
-    path('reviews/', ReviewListCreateView.as_view(), name='review-create-list'),
-    path('reviews/<int:pk>', ReviewRetrieveUpdateDestroyView.as_view(), name='review-retrieve-update-destroy'),
-
+    path('actors/', include('actors.urls')),
+    path('genres/', include('genres.urls')),
+    path('movies/', include('movies.urls')),
+    path('reviews/', include('reviews.urls')),
 ]
