@@ -5,7 +5,7 @@ from movies.models import Movie
 from movies.serializers import MovieSerializer
 
 
-class MovieListCreateApiView(generics.ListCreateAPIView):
+class MovieListCreateView(generics.ListCreateAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
 
