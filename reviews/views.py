@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from rest_framework import generics
 from reviews.models import Review
 from reviews.serializers import ReviewModelSerializer
