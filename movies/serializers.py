@@ -1,16 +1,22 @@
 from datetime import datetime
 
+from django.db.models import Avg
 from rest_framework import serializers
 
 from movies.models import Movie
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    rate = serializers.SerializerMethodField(read_only=True)
+
     class Meta:
         model = Movie
         fields = '__all__'
 
-    # Validaçoes básicas apenas para validar o funcionamento
+    def get_rate(self, obj):
+        return round(obj.reviews.aggregate(average=Avg('rating'))['average'], 1) if obj.reviews.exists() else None
+        
+
     def validate_title(self, value: str):
         if not value.lower().startswith('a'):
             raise serializers.ValidationError('O título deve iniciar com a letra A')
