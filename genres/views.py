@@ -10,7 +10,7 @@ from genres.permissions import GenrePermission
 
 
 class GenreCreateList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticated, GenrePermission]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
