@@ -2,6 +2,15 @@ from rest_framework import permissions
 
 class GenrePermission(permissions.BasePermission):
     def has_permission(self, request, view):
-        if request.method in permissions.SAFE_METHODS:
+
+        if request.method in ['GET', 'OPTIONS', 'HEAD']:
+            return request.user.has_perm('genres.view_genre')
+
+        if request.method == ['POST']:
             return True
-        return request.user.is_authenticated
+
+        if request.method in ['PUT', 'PATCH']:
+            return request.user.has_perm('genres.change_genre')
+
+        if request.method == ['DELETE']:
+            return request.user.has_perm('genres.delete_genre')
