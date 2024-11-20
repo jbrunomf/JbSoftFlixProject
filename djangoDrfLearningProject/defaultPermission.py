@@ -4,13 +4,19 @@ from rest_framework import permissions
 class DefaultPermission(permissions.BasePermission):
 
     def has_permission(self, request, view):
-        model_name = self.__get_model_name(request.method, view)
-        return False
+        model_name = self.__get_model_name(
+            request.method,
+            view
+        )
+        if not model_name:
+            return False
+
+        return request.user.has_perm(model_name)
 
     def __get_model_name(self, method, view):
         try:
-            model_name = view.get_queryset().model.__name__
-            app_label = view.get_queryset().model._meta.app_label
+            model_name = view.queryset.model._meta.model_name
+            app_label = view.queryset.model._meta.app_label
             action = self.__get_method_action(method)
             return f'{app_label}.{action}_{model_name}'
         except AttributeError:
