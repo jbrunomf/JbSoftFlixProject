@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from movies.models import Movie
 
-from movies.serializers import MovieSerializer
+from movies.serializers import MovieSerializer, MovieListDetailSerializer
 
 from rest_framework import permissions
 
@@ -16,14 +16,21 @@ from reviews.models import Review
 class MovieListCreateView(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticated, DefaultPermission]
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return MovieSerializer
+        return MovieListDetailSerializer
 
 
 class MovieRetrieveUpdateDestroyApiView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, DefaultPermission]
     queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
 
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return MovieSerializer
+        return MovieListDetailSerializer
 
 class MovieStatisticsView(views.APIView):
     permission_classes = (IsAuthenticated, DefaultPermission,)
